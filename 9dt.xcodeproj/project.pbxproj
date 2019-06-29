@@ -8,12 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		6E3158DA22C2F9640023592F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3158D922C2F9640023592F /* AppDelegate.swift */; };
-		6E3158DC22C2F9640023592F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3158DB22C2F9640023592F /* ViewController.swift */; };
+		6E3158DC22C2F9640023592F /* GridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3158DB22C2F9640023592F /* GridViewController.swift */; };
 		6E3158DF22C2F9640023592F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E3158DD22C2F9640023592F /* Main.storyboard */; };
 		6E3158E122C2F9670023592F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E3158E022C2F9670023592F /* Assets.xcassets */; };
 		6E3158E422C2F9670023592F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6E3158E222C2F9670023592F /* LaunchScreen.storyboard */; };
 		6E3158EF22C2F9670023592F /* _dtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3158EE22C2F9670023592F /* _dtTests.swift */; };
 		6E3158FA22C2F9670023592F /* _dtUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3158F922C2F9670023592F /* _dtUITests.swift */; };
+		6E31590E22C300B90023592F /* ColumnStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E31590D22C300B90023592F /* ColumnStackView.swift */; };
+		6E41E48C22C7F0F600290B59 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E41E48B22C7F0F600290B59 /* GameManager.swift */; };
+		6EBD41F622C46FE50091CD6A /* TokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBD41F522C46FE50091CD6A /* TokenView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +39,7 @@
 /* Begin PBXFileReference section */
 		6E3158D622C2F9640023592F /* 9dt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 9dt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E3158D922C2F9640023592F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		6E3158DB22C2F9640023592F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6E3158DB22C2F9640023592F /* GridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewController.swift; sourceTree = "<group>"; };
 		6E3158DE22C2F9640023592F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6E3158E022C2F9670023592F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6E3158E322C2F9670023592F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +50,9 @@
 		6E3158F522C2F9670023592F /* 9dtUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 9dtUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E3158F922C2F9670023592F /* _dtUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _dtUITests.swift; sourceTree = "<group>"; };
 		6E3158FB22C2F9670023592F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6E31590D22C300B90023592F /* ColumnStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnStackView.swift; sourceTree = "<group>"; };
+		6E41E48B22C7F0F600290B59 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
+		6EBD41F522C46FE50091CD6A /* TokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,10 +104,10 @@
 			isa = PBXGroup;
 			children = (
 				6E3158D922C2F9640023592F /* AppDelegate.swift */,
-				6E3158DB22C2F9640023592F /* ViewController.swift */,
-				6E3158DD22C2F9640023592F /* Main.storyboard */,
-				6E3158E022C2F9670023592F /* Assets.xcassets */,
-				6E3158E222C2F9670023592F /* LaunchScreen.storyboard */,
+				6E31590B22C2FC360023592F /* View */,
+				6E31590A22C2FC2D0023592F /* ViewController */,
+				6E31590922C2FC210023592F /* Model */,
+				6E31590C22C2FC520023592F /* Resources */,
 				6E3158E522C2F9670023592F /* Info.plist */,
 			);
 			path = 9dt;
@@ -123,6 +129,41 @@
 				6E3158FB22C2F9670023592F /* Info.plist */,
 			);
 			path = 9dtUITests;
+			sourceTree = "<group>";
+		};
+		6E31590922C2FC210023592F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				6E41E48B22C7F0F600290B59 /* GameManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6E31590A22C2FC2D0023592F /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				6E3158DB22C2F9640023592F /* GridViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		6E31590B22C2FC360023592F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6E31590D22C300B90023592F /* ColumnStackView.swift */,
+				6EBD41F522C46FE50091CD6A /* TokenView.swift */,
+				6E3158E222C2F9670023592F /* LaunchScreen.storyboard */,
+				6E3158DD22C2F9640023592F /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6E31590C22C2FC520023592F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6E3158E022C2F9670023592F /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,7 +297,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6E3158DC22C2F9640023592F /* ViewController.swift in Sources */,
+				6E41E48C22C7F0F600290B59 /* GameManager.swift in Sources */,
+				6E31590E22C300B90023592F /* ColumnStackView.swift in Sources */,
+				6E3158DC22C2F9640023592F /* GridViewController.swift in Sources */,
+				6EBD41F622C46FE50091CD6A /* TokenView.swift in Sources */,
 				6E3158DA22C2F9640023592F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
