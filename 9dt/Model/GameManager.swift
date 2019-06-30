@@ -15,11 +15,11 @@ protocol GameManagerDelegate {
 class GameManager {
     
     static let shared = GameManager()
-    
-    private var moves = [IndexPath]()
-    private let acceptableRows = [0, 1, 2, 3]
+    private var moves = [Int]()
+    private var moveIndexPaths = [IndexPath]()
+    private let possibleRows = [0, 1, 2, 3]
 
-    lazy var player: Player = .blue
+    lazy var player: Player = .monkey
 
     init(){}
 }
@@ -28,56 +28,87 @@ class GameManager {
 
 extension GameManager {
     
-    func addMove(with indexPath: IndexPath) {
-
+    func addMove(with column: Int) {
+        
         // Check if there is available moves left
         // Check if move has been made
         // If both conditions hold true, exit from function
         guard
-            moves.count <= 15,
-            !moves.contains(indexPath)
+            moves.count <= 15
             else { return }
-
+        
         // Get all played rows in column
-        let columnTurns = moves.filter { $0.section == indexPath.section}.compactMap { $0.row }
-
+        let playedRowsInColumn = moveIndexPaths.filter { $0.section == column}.compactMap { $0.row }
+        
         // Assign lowest available slot (on y axis) in column
-        for i in acceptableRows.reversed() {
-            if !columnTurns.contains(i) {
-                let acceptableIndexpath = IndexPath(row: i, section: indexPath.section)
-                moves.append(acceptableIndexpath)
-
-                // Update UI 
+        for i in possibleRows.reversed() {
+            
+            // Find highest unplayed value in column
+            if !playedRowsInColumn.contains(i) {
+                
+                // Assign hightest unplayed value in column
+                let acceptableIndexpath = IndexPath(row: i, section: column)
+                moveIndexPaths.append(acceptableIndexpath)
+                moves.append(column)
+                
+                // Update UI
                 NotificationCenter.default.post(name: .turnTaken, object: nil, userInfo: [
                     Notification.key.indexPathKey: acceptableIndexpath,
                     Notification.key.playerKey: player
                     ])
-
+                
+                // Exit from loop once row value has been assigned to column
                 break
             }
         }
-
+        
         // Update turn
         switch player {
-        case .blue:
-            player = .red
-        case .red:
-            player = .blue
+        case .monkey:
+            // Update services with moves from human player
+            updateMoves(with: moves)
+
+            player = .machine
+        case .machine:
+            player = .monkey
+        }
+    }
+    
+    private func updateMoves(with currentMoves: [Int]) {
+
+        MovesManager.shared.getMoves(with: currentMoves) { (newMoves, error) in
+
+            if let error = error {
+                print(error)
+            }
+            
+            guard
+                let verifiedMoves = newMoves,
+                let latestMachineMoveColumn = verifiedMoves.last
+                else { return }
+            
+            self.addMove(with: latestMachineMoveColumn)
         }
     }
 }
 
+// MARK: Logic
+
+extension GameManager {
+    
+}
+
 extension GameManager {
     enum Player {
-        case blue
-        case red
+        case monkey
+        case machine
         
         var color: UIColor {
             switch self {
-            case .blue:
-                return UIColor.blue
-            case .red:
+            case .monkey:
                 return UIColor.red
+            case .machine:
+                return UIColor.black
             }
         }
     }

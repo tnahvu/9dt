@@ -16,6 +16,7 @@
 		6E3158FA22C2F9670023592F /* _dtUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3158F922C2F9670023592F /* _dtUITests.swift */; };
 		6E31590E22C300B90023592F /* ColumnStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E31590D22C300B90023592F /* ColumnStackView.swift */; };
 		6E41E48C22C7F0F600290B59 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E41E48B22C7F0F600290B59 /* GameManager.swift */; };
+		6E41E48E22C82CED00290B59 /* MoveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E41E48D22C82CED00290B59 /* MoveManager.swift */; };
 		6EBD41F622C46FE50091CD6A /* TokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBD41F522C46FE50091CD6A /* TokenView.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		6E3158FB22C2F9670023592F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6E31590D22C300B90023592F /* ColumnStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnStackView.swift; sourceTree = "<group>"; };
 		6E41E48B22C7F0F600290B59 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
+		6E41E48D22C82CED00290B59 /* MoveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveManager.swift; sourceTree = "<group>"; };
 		6EBD41F522C46FE50091CD6A /* TokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,6 +108,7 @@
 				6E3158D922C2F9640023592F /* AppDelegate.swift */,
 				6E31590B22C2FC360023592F /* View */,
 				6E31590A22C2FC2D0023592F /* ViewController */,
+				6E41E48F22C82CF100290B59 /* Services */,
 				6E31590922C2FC210023592F /* Model */,
 				6E31590C22C2FC520023592F /* Resources */,
 				6E3158E522C2F9670023592F /* Info.plist */,
@@ -164,6 +167,15 @@
 				6E3158E022C2F9670023592F /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		6E41E48F22C82CF100290B59 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				6E41E48D22C82CED00290B59 /* MoveManager.swift */,
+			);
+			name = Services;
+			path = Model/Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,6 +313,7 @@
 				6E31590E22C300B90023592F /* ColumnStackView.swift in Sources */,
 				6E3158DC22C2F9640023592F /* GridViewController.swift in Sources */,
 				6EBD41F622C46FE50091CD6A /* TokenView.swift in Sources */,
+				6E41E48E22C82CED00290B59 /* MoveManager.swift in Sources */,
 				6E3158DA22C2F9640023592F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

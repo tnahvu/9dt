@@ -79,7 +79,7 @@ extension TokenView {
 extension TokenView {
     
     @objc func buttonTapped() {
-        GameManager.shared.addMove(with: indexPath)
+        GameManager.shared.addMove(with: indexPath.section)
     }
     
     func configure(with turn: GameManager.Player) {
