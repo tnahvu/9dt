@@ -38,6 +38,27 @@ class GridViewController: UIViewController {
         
         return button
     }()
+    
+    // Inits
+    
+    init(with player: GameManager.Player) {
+        super.init(nibName: nil, bundle: nil)
+        
+        if player == .machine {
+           GameManager.shared.startGameWithMachine()
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // Life cycles
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = true
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +66,7 @@ class GridViewController: UIViewController {
         setup()
         setupSubViews()
         setupConstraints()
+        addObservers()
     }
 }
 
@@ -79,6 +101,10 @@ extension GridViewController {
             columnStackView.heightAnchor.constraint(equalToConstant: self.view.frame.width)
             ])
     }
+    
+    private func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(receivedNotificationGameOver(with:)), name: .gameEnded, object: nil)
+    }
 }
 
 //MARK: Actions
@@ -88,5 +114,27 @@ extension GridViewController {
     @objc private func startOver() {
         NotificationCenter.default.post(name: .clearGame, object: nil)
         GameManager.shared.clearGame()
+    }
+}
+
+// MARK: Result
+
+extension GridViewController {
+    
+    @objc private func receivedNotificationGameOver(with notification: Notification) {
+        
+        guard
+            let userInfo = notification.userInfo,
+            let result = userInfo[Notification.key.result] as? GameManager.Result
+            else { return }
+
+
+        let alert = UIAlertController(title: result.message, message: "", preferredStyle: .alert)
+        
+        let playAgainAction = UIAlertAction(title: "OK", style: .default) { action in self.startOver() }
+
+        alert.addAction(playAgainAction)
+        
+        self.present(alert, animated: true)
     }
 }

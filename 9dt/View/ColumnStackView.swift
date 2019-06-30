@@ -44,6 +44,7 @@ class ColumnStackView: UIView {
 extension ColumnStackView {
     
     private func setupSubviews() {
+        
         self.addSubview(stackView)
  
         self.stackView.addArrangedSubview(rowZero)

@@ -70,6 +70,7 @@ extension TokenView {
     }
     
     private func addNotificationObservers() {
+
         NotificationCenter.default.addObserver(self, selector: #selector(receivedNotificationForTurn(with:)), name: .turnTaken, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(receivedNotificationToClearGame), name: .clearGame, object: nil)
     }
@@ -80,10 +81,12 @@ extension TokenView {
 extension TokenView {
     
     @objc func buttonTapped() {
+        
         GameManager.shared.addMove(with: indexPath.section)
     }
     
     func configure(with turn: GameManager.Player) {
+        
         self.circleView.backgroundColor = turn.color
     }
     

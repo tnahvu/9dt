@@ -12,6 +12,7 @@ struct Constants {
     
     // UI padding
     struct UI {
+        static let hairline: CGFloat = 2
         static let space: CGFloat = 8
         static let minPadding: CGFloat = 16
         static let standardPadding: CGFloat = 32

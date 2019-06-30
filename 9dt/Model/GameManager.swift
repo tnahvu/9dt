@@ -65,9 +65,8 @@ extension GameManager {
         // Check if there is available moves left
         // Check if move has been made
         // If both conditions hold true, exit from function
-        guard
-            moves.count <= 15
-            else { return }
+        
+        guard moves.count <= 15 else { return }
         
         // Get all played rows in column
         let playedRowsInColumn = moveIndexPaths.filter { $0.section == column}.compactMap { $0.row }
@@ -128,19 +127,29 @@ extension GameManager {
             self.addMove(with: latestMachineMoveColumn)
         }
     }
-    
+}
+
+// MARK: Configure
+
+extension GameManager {
     func clearGame() {
         moves.removeAll()
         moveIndexPaths.removeAll()
         diagonalFromBottomLeftPlayers.removeAll()
         diagonalFromBottomRightPlayers.removeAll()
-
+        
         columns.forEach {
             columns[$0.key]?.removeAll()
         }
         rows.forEach {
             rows[$0.key]?.removeAll()
         }
+    }
+    
+    func startGameWithMachine() {
+        clearGame()
+        player = .machine
+        updateMoves(with: [])
     }
 }
 
@@ -149,9 +158,25 @@ extension GameManager {
 extension GameManager {
     private func checkForWin(with indexPath: IndexPath, player: Player) {
         
+        // Check all possible ways of winning
         if isColumnWin(with: indexPath, player: player) || isRowWin(with: indexPath, player: player) || isDiagonalWin(with: indexPath, player: player) {
             
-            print("\(player) WON")
+            var result: Result
+            
+            switch player {
+            case .machine:
+                result = .machineWon
+            case .monkey:
+                result = .monkeyWon
+            }
+            
+            NotificationCenter.default.post(name: .gameEnded, object: nil, userInfo: [Notification.key.result: result])
+            
+            return
+        }
+        
+        if moves.count == 16 {
+             NotificationCenter.default.post(name: .gameEnded, object: nil, userInfo: [Notification.key.result: Result.draw]); return
         }
     }
     
@@ -224,6 +249,23 @@ extension GameManager {
                 return UIColor.red
             case .machine:
                 return UIColor.black
+            }
+        }
+    }
+    
+    enum Result {
+        case monkeyWon
+        case machineWon
+        case draw
+        
+        var message: String {
+            switch self {
+            case .machineWon:
+                return "You lose, Monkey."
+            case .monkeyWon:
+                return "You Won! Humanity has hope against the machine. Sort of."
+            case .draw:
+                return "Ya'll both suck at this"
             }
         }
     }

@@ -29,11 +29,13 @@ extension UIColor {
 extension Notification.Name {
     static let turnTaken = Notification.Name("turnTaken")
     static let clearGame = Notification.Name("clearGame")
+    static let gameEnded = Notification.Name("gameEnded")
 }
 
 extension Notification {
     enum key {
         static let indexPathKey = "indexPathKey"
         static let playerKey = "player"
+        static let result = "gameResult"
     }
 }
