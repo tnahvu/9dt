@@ -11,6 +11,7 @@ import UIKit
 class TokenView: UIView {
     
     // Properties
+    var player: GameManager.Player?
     
     private var circleView: UIButton = {
         let view = UIButton()
@@ -83,6 +84,7 @@ extension TokenView {
     }
     
     func configure(with turn: GameManager.Player) {
+        self.player = turn
         self.circleView.backgroundColor = turn.color
     }
     

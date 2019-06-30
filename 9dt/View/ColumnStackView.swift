@@ -32,7 +32,6 @@ class ColumnStackView: UIView {
         self.columnIndex = columnIndex
 
         super.init(frame: .zero)
-        setup()
         setupSubviews()
         setupConstraints()
     }
@@ -43,9 +42,6 @@ class ColumnStackView: UIView {
 }
 
 extension ColumnStackView {
-    
-    private func setup() {
-    }
     
     private func setupSubviews() {
         self.addSubview(stackView)
@@ -65,5 +61,4 @@ extension ColumnStackView {
             stackView.heightAnchor.constraint(equalTo: self.heightAnchor),
             ])
     }
-    
 }

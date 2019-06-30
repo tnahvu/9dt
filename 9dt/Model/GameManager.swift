@@ -14,12 +14,26 @@ protocol GameManagerDelegate {
 
 class GameManager {
     
+    // Properties
     static let shared = GameManager()
     private var moves = [Int]()
     private var moveIndexPaths = [IndexPath]()
     private let possibleRows = [0, 1, 2, 3]
-
     lazy var player: Player = .monkey
+    
+    private var columns = [
+        0: [Player](),
+        1: [Player](),
+        2: [Player](),
+        3: [Player]()
+    ]
+    
+    private var rows = [
+        0: [Player](),
+        1: [Player](),
+        2: [Player](),
+        3: [Player]()
+    ]
 
     init(){}
 }
@@ -49,6 +63,7 @@ extension GameManager {
                 // Assign hightest unplayed value in column
                 let acceptableIndexpath = IndexPath(row: i, section: column)
                 moveIndexPaths.append(acceptableIndexpath)
+                checkForWin(with: acceptableIndexpath, player: player)
                 moves.append(column)
                 
                 // Update UI
@@ -65,6 +80,7 @@ extension GameManager {
         // Update turn
         switch player {
         case .monkey:
+
             // Update services with moves from human player
             updateMoves(with: moves)
 
@@ -95,9 +111,41 @@ extension GameManager {
 // MARK: Logic
 
 extension GameManager {
+    private func checkForWin(with indexPath: IndexPath, player: Player) {
+        
+       // isColumnWin(with: indexPath, player: player)
+        isRowWin(with: indexPath, player: player)
+    }
     
+    private func isColumnWin(with indexPath: IndexPath, player: Player) {
+        
+        // Check for column win
+        columns[indexPath.section]?.append(player)
+        
+        guard
+            let column = columns[indexPath.section],
+            column.count == 4,
+            column.allSatisfy({ $0 == column.last })
+            else { return }
+        
+        print("WON by column")
+    }
+    
+    private func isRowWin(with indexPath: IndexPath, player: Player) {
+        // Check for column win
+        rows[indexPath.row]?.append(player)
+        
+        guard
+            let row = rows[indexPath.row],
+            row.count == 4,
+            row.allSatisfy({ $0 == row.last })
+            else { return }
+        
+        print("WON by row")
+    }
 }
 
+// MARK: Players
 extension GameManager {
     enum Player {
         case monkey
