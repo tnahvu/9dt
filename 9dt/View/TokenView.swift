@@ -11,7 +11,6 @@ import UIKit
 class TokenView: UIView {
     
     // Properties
-    var player: GameManager.Player?
     
     private var circleView: UIButton = {
         let view = UIButton()
@@ -31,7 +30,7 @@ class TokenView: UIView {
         setup()
         setupSubviews()
         setupConstraints()
-        addNotificationObserver()
+        addNotificationObservers()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -70,8 +69,9 @@ extension TokenView {
             ])
     }
     
-    private func addNotificationObserver() {
+    private func addNotificationObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(receivedNotificationForTurn(with:)), name: .turnTaken, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(receivedNotificationToClearGame), name: .clearGame, object: nil)
     }
 }
 
@@ -84,7 +84,6 @@ extension TokenView {
     }
     
     func configure(with turn: GameManager.Player) {
-        self.player = turn
         self.circleView.backgroundColor = turn.color
     }
     
@@ -99,40 +98,9 @@ extension TokenView {
 
         configure(with: player)
     }
-}
-
-extension UIView {
-    func makeCircular() {
-        self.layer.cornerRadius = self.bounds.width/2
-        self.clipsToBounds = true
-    }
     
-//    func cutOutTransparentOverlay() {
-//        let path = UIBezierPath()
-//        let sizes = CGSize(width: self.bounds.width * 0.8, height: self.bounds.height * 0.8)
-//        let circlePath = UIBezierPath(ovalIn: CGRect(origin: self.frame.origin, size: sizes))
-//        path.append(circlePath)
-//
-//        let maskLayer = CAShapeLayer() //create the mask layer
-//        maskLayer.path = path.cgPath // Give the mask layer the path you just draw
-//        maskLayer.fillRule = .evenOdd // Cut out the intersection part
-//        self.layer.mask = maskLayer
-//    }
-}
+    @objc private func receivedNotificationToClearGame() {
 
-extension UIColor {
-    class var barelyThere: UIColor {
-        return UIColor(white: 25.0 / 255.0, alpha: 0.2)
-    }
-}
-
-extension Notification.Name {
-    static let turnTaken = Notification.Name("turnTaken")
-}
-
-extension Notification {
-    enum key {
-        static let indexPathKey = "indexPathKey"
-        static let playerKey = "player"
+        self.circleView.backgroundColor = .white
     }
 }

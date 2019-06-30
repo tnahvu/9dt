@@ -19,7 +19,7 @@ class GameManager {
     private var moves = [Int]()
     private var moveIndexPaths = [IndexPath]()
     private let possibleRows = [0, 1, 2, 3]
-    lazy var player: Player = .monkey
+    private var player: Player = .monkey
     
     private var columns = [
         0: [Player](),
@@ -53,7 +53,7 @@ class GameManager {
     
     private var diagonalFromBottomRightPlayers = [Player]()
 
-    init(){}
+    init() {}
 }
 
 // MARK: Actions
@@ -81,7 +81,6 @@ extension GameManager {
                 // Assign hightest unplayed value in column
                 let acceptableIndexpath = IndexPath(row: i, section: column)
                 moveIndexPaths.append(acceptableIndexpath)
-                checkForWin(with: acceptableIndexpath, player: player)
                 moves.append(column)
                 
                 // Update UI
@@ -89,6 +88,9 @@ extension GameManager {
                     Notification.key.indexPathKey: acceptableIndexpath,
                     Notification.key.playerKey: player
                     ])
+                
+                // Check for win
+                checkForWin(with: acceptableIndexpath, player: player)
                 
                 // Exit from loop once row value has been assigned to column
                 break
@@ -126,6 +128,20 @@ extension GameManager {
             self.addMove(with: latestMachineMoveColumn)
         }
     }
+    
+    func clearGame() {
+        moves.removeAll()
+        moveIndexPaths.removeAll()
+        diagonalFromBottomLeftPlayers.removeAll()
+        diagonalFromBottomRightPlayers.removeAll()
+
+        columns.forEach {
+            columns[$0.key]?.removeAll()
+        }
+        rows.forEach {
+            rows[$0.key]?.removeAll()
+        }
+    }
 }
 
 // MARK: Logic
@@ -133,12 +149,13 @@ extension GameManager {
 extension GameManager {
     private func checkForWin(with indexPath: IndexPath, player: Player) {
         
-        isDiagonalWin(with: indexPath, player: player)
-//
-//        isColumnWin(with: indexPath, player: player) || isRowWin(with: indexPath, player: player) || isDiagonalWin(with: indexPath, player: player)
+        if isColumnWin(with: indexPath, player: player) || isRowWin(with: indexPath, player: player) || isDiagonalWin(with: indexPath, player: player) {
+            
+            print("\(player) WON")
+        }
     }
     
-    private func isColumnWin(with indexPath: IndexPath, player: Player) {
+    private func isColumnWin(with indexPath: IndexPath, player: Player) -> Bool {
         
         // Check for column win
         columns[indexPath.section]?.append(player)
@@ -147,12 +164,12 @@ extension GameManager {
             let column = columns[indexPath.section],
             column.count == 4,
             column.allSatisfy({ $0 == column.last })
-            else { return }
+            else { return false }
         
-        print("WON by column")
+        return true
     }
 
-    private func isRowWin(with indexPath: IndexPath, player: Player) {
+    private func isRowWin(with indexPath: IndexPath, player: Player) -> Bool {
         
         rows[indexPath.row]?.append(player)
         
@@ -160,12 +177,12 @@ extension GameManager {
             let row = rows[indexPath.row],
             row.count == 4,
             row.allSatisfy({ $0 == row.last })
-            else { return }
+            else { return false }
         
-        print("WON by row")
+        return true
     }
 
-    private func isDiagonalWin(with indexPath: IndexPath, player: Player) {
+    private func isDiagonalWin(with indexPath: IndexPath, player: Player) -> Bool {
         
         // Check if move falls into diagonal from bottom left win possibilities
         if diagonalFromBottomLeftIndexPaths.contains(indexPath) {
@@ -175,7 +192,7 @@ extension GameManager {
                 diagonalFromBottomLeftPlayers.allSatisfy({
                     $0 == diagonalFromBottomLeftPlayers.last
                 }) {
-                print("WON by diagonal bottom left")
+                return true
             }
         }
         
@@ -187,9 +204,11 @@ extension GameManager {
                 diagonalFromBottomRightPlayers.allSatisfy({
                     $0 == diagonalFromBottomRightPlayers.last
                 }) {
-                print("WON by diagonal bottom right")
+                return true
             }
         }
+        
+        return false
     }
 }
 
