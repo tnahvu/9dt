@@ -113,6 +113,7 @@
 			children = (
 				6E3158D922C2F9640023592F /* AppDelegate.swift */,
 				6E3AAC6522C9488C003A7754 /* Extension.swift */,
+				6E3AAC6722C94935003A7754 /* Constants.swift */,
 				6E31590B22C2FC360023592F /* View */,
 				6E31590A22C2FC2D0023592F /* ViewController */,
 				6E41E48F22C82CF100290B59 /* Services */,
@@ -163,7 +164,6 @@
 			children = (
 				6E31590D22C300B90023592F /* ColumnStackView.swift */,
 				6EBD41F522C46FE50091CD6A /* TokenView.swift */,
-				6E3AAC6722C94935003A7754 /* Constants.swift */,
 				6E3158E222C2F9670023592F /* LaunchScreen.storyboard */,
 				6E3158DD22C2F9640023592F /* Main.storyboard */,
 			);
