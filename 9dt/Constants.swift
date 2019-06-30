@@ -20,7 +20,6 @@ struct Constants {
     }
     
     // Button
-    
     struct button {
         static let standardWidth: CGFloat = 64
         static let primaryButtonWidth: CGFloat = 128
