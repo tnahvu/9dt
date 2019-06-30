@@ -34,6 +34,24 @@ class GameManager {
         2: [Player](),
         3: [Player]()
     ]
+    
+    private var diagonalFromBottomLeftIndexPaths = [
+        IndexPath(row: 3, section: 0),
+        IndexPath(row: 2, section: 1),
+        IndexPath(row: 1, section: 2),
+        IndexPath(row: 0, section: 3)
+    ]
+    
+    private var diagonalFromBottomLeftPlayers = [Player]()
+    
+    private var diagonalFromBottomRightIndexPaths = [
+        IndexPath(row: 0, section: 0),
+        IndexPath(row: 1, section: 1),
+        IndexPath(row: 2, section: 2),
+        IndexPath(row: 3, section: 3)
+    ]
+    
+    private var diagonalFromBottomRightPlayers = [Player]()
 
     init(){}
 }
@@ -90,6 +108,7 @@ extension GameManager {
         }
     }
     
+    // Update service with current moves and get new move from service
     private func updateMoves(with currentMoves: [Int]) {
 
         MovesManager.shared.getMoves(with: currentMoves) { (newMoves, error) in
@@ -103,6 +122,7 @@ extension GameManager {
                 let latestMachineMoveColumn = verifiedMoves.last
                 else { return }
             
+            // Adding latest move for machine/from service
             self.addMove(with: latestMachineMoveColumn)
         }
     }
@@ -113,8 +133,9 @@ extension GameManager {
 extension GameManager {
     private func checkForWin(with indexPath: IndexPath, player: Player) {
         
-       // isColumnWin(with: indexPath, player: player)
-        isRowWin(with: indexPath, player: player)
+        isDiagonalWin(with: indexPath, player: player)
+//
+//        isColumnWin(with: indexPath, player: player) || isRowWin(with: indexPath, player: player) || isDiagonalWin(with: indexPath, player: player)
     }
     
     private func isColumnWin(with indexPath: IndexPath, player: Player) {
@@ -130,9 +151,9 @@ extension GameManager {
         
         print("WON by column")
     }
-    
+
     private func isRowWin(with indexPath: IndexPath, player: Player) {
-        // Check for column win
+        
         rows[indexPath.row]?.append(player)
         
         guard
@@ -142,6 +163,33 @@ extension GameManager {
             else { return }
         
         print("WON by row")
+    }
+
+    private func isDiagonalWin(with indexPath: IndexPath, player: Player) {
+        
+        // Check if move falls into diagonal from bottom left win possibilities
+        if diagonalFromBottomLeftIndexPaths.contains(indexPath) {
+            diagonalFromBottomLeftPlayers.append(player)
+            
+            if diagonalFromBottomLeftPlayers.count == 4 &&
+                diagonalFromBottomLeftPlayers.allSatisfy({
+                    $0 == diagonalFromBottomLeftPlayers.last
+                }) {
+                print("WON by diagonal bottom left")
+            }
+        }
+        
+        // Check if move falls into diagonal from bottom right win possibilities
+        if diagonalFromBottomRightIndexPaths.contains(indexPath) {
+            diagonalFromBottomRightPlayers.append(player)
+            
+            if diagonalFromBottomRightPlayers.count == 4 &&
+                diagonalFromBottomRightPlayers.allSatisfy({
+                    $0 == diagonalFromBottomRightPlayers.last
+                }) {
+                print("WON by diagonal bottom right")
+            }
+        }
     }
 }
 

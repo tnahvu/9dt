@@ -15,6 +15,7 @@ class MovesManager {
     private let baseUrl = "https://w0ayb2ph1k.execute-api.us-west-2.amazonaws.com/production?moves="
     private let space = " "
     private let emptyValue = ""
+
     init(){}
 }
 
@@ -38,11 +39,12 @@ extension MovesManager {
                     completionHandler(nil, error)
                 }
 
-                // Decode into moves array
                 let decoder = JSONDecoder()
 
                 guard
                     let data = data,
+
+                    // Decode into moves array
                     let newMoves = try? decoder.decode([Int].self, from: data)
                     else { completionHandler(nil, error); return }
 
