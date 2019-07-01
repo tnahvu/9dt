@@ -39,7 +39,9 @@ class StartViewController: UIViewController {
     private let yesButton: UIButton = {
         let button = UIButton()
         button.setTitle("Shaw do.  Let me go first!", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 48, weight: .heavy)
+        button.titleLabel?.numberOfLines = 0
+        button.titleLabel?.textAlignment = .center
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 32, weight: .heavy)
         button.addTarget(self, action: #selector(yesButtonPressed), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .black
